@@ -1,0 +1,21 @@
+{
+  "name": "colorize",
+  "version": "1.0.0",
+  "description": "uses deep AI to colorize old photos ",
+  "main": "colorize.js",
+  "scripts": {
+    "colorize": "node colorize.js",
+    "clean": "rimraf ./dist",
+    "ng": "ng"
+  },
+  "dependencies": {
+    "deepai": "^1.0.0",
+    "rimraf": "3.0.2",
+    "request": "2.88.2"
+  },
+  "author": "Tschuss",
+  "license": "ISC",
+  "devDependencies": {
+    "mkdirp": "^1.0.4"
+  }
+}
