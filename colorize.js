@@ -32,7 +32,7 @@ fs.readdir(photo_dir, (err, files) => {
             var photo1=photo.substr(0,photo.lastIndexOf('.'));
             var localPath=photo1+'_color.jpg';
     
-            request.head(url, function(err, res, body){
+            request.head(url, function(err2, res, body){
                 console.log ("escribe en disco: "+ localPath);
                 request(url).pipe(fs.createWriteStream(localPath));
                 });
