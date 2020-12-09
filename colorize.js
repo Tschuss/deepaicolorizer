@@ -9,39 +9,73 @@ const deepai = require('deepai');
 
 
 deepai.setApiKey('bc2df53a-ee00-4283-a500-d71c9c11b1db');
-var photo="C:\\Users\\jiglesias\\Pictures\\jesus.png";
 
-(async function() {
-    var resp;
-    resp = await deepai.callStandardApi("colorizer", {
-        image: fs.createReadStream(photo),
-    }).catch(error => {
-        console.error('ERROR ',error);
+const photo_dir = process.argv[2];
+
+console.log ("directorio a procesar: "+ photo_dir);
+
+var filelist =[];
+
+fs.readdir(photo_dir, (err, files) => {
+    files.forEach(file => {
+      console.log("Procesa la photo:" +file);
+      (async function() { 
+        var resp;
+        var photo=photo_dir+"\\"+file;
+        resp = await deepai.callStandardApi("colorizer", {
+            image: fs.createReadStream(photo),
+        }).catch(error => {
+            console.error('ERROR ',error);
+        });
+        return new Promise((resolve) => {
+            var url=resp.output_url;
+            var photo1=photo.substr(0,photo.lastIndexOf('.'));
+            var localPath=photo1+'_color.jpg';
+    
+            request.head(url, function(err, res, body){
+                console.log ("escribe en disco: "+ localPath);
+                request(url).pipe(fs.createWriteStream(localPath));
+                });
+            }).catch(error => {
+                console.error('ERROR ',error);
+            });
+        })()
     });
-    console.log(resp);
-    //añadido para evitar un error al validar el certificado (que no salida en octubre y ahora aparece en noviembre 2020)
-    //process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = 0
-    return new Promise((resolve) => {
-        var url; //= "https://api.deepai.org/job-view-file/7c87cc27-cf07-4459-ad87-7f8e43478897/outputs/output.jpg"
-        if (resp) {
-            url=resp.output_url;
-        }
-        var photo1=photo.substr(0,photo.lastIndexOf('.'));
-        var localPath=photo1+'_color.jpg';
+  });
+  
+// var photo="C:\\Users\\jiglesias\\Pictures\\jesus.png";
 
-        request.head(url, function(err, res, body){
-            console.log('content-type:', res.headers['content-type']);
-            console.log('content-length:', res.headers['content-length']);
+// (async function() {
+//     var resp;
+//     resp = await deepai.callStandardApi("colorizer", {
+//         image: fs.createReadStream(photo),
+//     }).catch(error => {
+//         console.error('ERROR ',error);
+//     });
+//     console.log(resp);
+//     //añadido para evitar un error al validar el certificado (que no salida en octubre y ahora aparece en noviembre 2020)
+//     //process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = 0
+//     return new Promise((resolve) => {
+//         var url; //= "https://api.deepai.org/job-view-file/7c87cc27-cf07-4459-ad87-7f8e43478897/outputs/output.jpg"
+//         if (resp) {
+//             url=resp.output_url;
+//         }
+//         var photo1=photo.substr(0,photo.lastIndexOf('.'));
+//         var localPath=photo1+'_color.jpg';
+
+//         request.head(url, function(err, res, body){
+//             console.log('content-type:', res.headers['content-type']);
+//             console.log('content-length:', res.headers['content-length']);
         
-            request(url).pipe(fs.createWriteStream(localPath));
-          });
+//             request(url).pipe(fs.createWriteStream(localPath));
+//           });
 
           
 
-    }).catch(error => {
-        console.error('ERROR ',error);
-    });
-})()
+//     }).catch(error => {
+//         console.error('ERROR ',error);
+//     });
+//})()
 
 /**
  

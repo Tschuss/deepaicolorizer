@@ -4,7 +4,7 @@
   "description": "uses deep AI to colorize old photos ",
   "main": "colorize.js",
   "scripts": {
-    "colorize": "node colorize.js",
+    "colorize": "node colorize.js C:\\Users\\jiglesias\\Pictures\\colorize",
     "clean": "rimraf ./dist",
     "ng": "ng"
   },
