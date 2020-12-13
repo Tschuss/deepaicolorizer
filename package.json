@@ -4,7 +4,7 @@
   "description": "uses deep AI to colorize old photos ",
   "main": "colorize.js",
   "scripts": {
-    "colorize": "node colorize.js C:\\Users\\jiglesias\\Pictures\\colorize",
+    "colorize": "node colorize.js  \"E:\\PHOTO\\cosas_de_casa\\1920-1930\\fotos antiguas abuelo jesus camara fuelle\\fotos en santa cruz del valle urbión\\tia ascension herminia francisco jose maria\"",
     "clean": "rimraf ./dist",
     "ng": "ng"
   },
